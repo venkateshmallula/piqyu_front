@@ -1,0 +1,11 @@
+.navbar{
+    position: fixed;
+    height: 50px;
+    background-color: rgb(27, 144, 198);
+    color: aliceblue;
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+
