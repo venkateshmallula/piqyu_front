@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Grid, GridItem, Icon, Flex, useToast, Box } from "@chakra-ui/react";
 import {
   MdPeople,
@@ -6,13 +5,11 @@ import {
   MdLibraryBooks,
   MdAttachMoney,
   MdSettings,
-  MdEvent,
   MdForum,
   MdNote,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { BiCalendar } from "react-icons/bi";
-import { IoIosListBox, IoIosMail, IoMdSettings } from "react-icons/io";
 import Navbar from "./navBar";
 
 const MyHome = () => {
@@ -29,6 +26,8 @@ const MyHome = () => {
     processRequestLink = "/admin";
   } else if (userRole === "Financeteam") {
     processRequestLink = "/Financeteam";
+  } else if (userRole === "host") {
+    processRequestLink = "/host";
   } else {
     // If user's role is not specified, set link to default and show toast
     processRequestLink = "/home";

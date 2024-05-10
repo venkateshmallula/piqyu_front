@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Table,
@@ -7,11 +7,17 @@ import {
   Th,
   Thead,
   Tr,
-  Checkbox,
-  Button,
   Text,
   Select,
-  useToast, // Import useToast hook
+  useToast,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import "./adminpage.css";
 import MyRequests from "./myReuests";
@@ -23,14 +29,16 @@ const AdminPage = () => {
   const [error, setError] = useState(null);
   const [adminOptions, setAdminOptions] = useState([]);
   const [selectedAdmins, setSelectedAdmins] = useState({});
-  const toast = useToast(); // Initialize useToast hook
+  const [selectedRequestDetails, setSelectedRequestDetails] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const toast = useToast();
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
         const username = localStorage.getItem("username");
         const response = await axios.get(
-          `http://localhost:5000/pendingrequests/${username}`
+          `https://piqyu.onrender.com/pendingrequests/${username}`
         );
         setPendingRequests(response.data);
         setIsLoading(false);
@@ -40,9 +48,10 @@ const AdminPage = () => {
         setIsLoading(false);
       }
     };
+
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/admins");
+        const response = await axios.get("https://piqyu.onrender.com/admins");
         const currentUser = localStorage.getItem("username");
         const filteredAdmins = response.data.filter(
           (admin) => admin.name !== currentUser
@@ -62,7 +71,7 @@ const AdminPage = () => {
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/requests/${id}`, {
+      await axios.put(`https://piqyu.onrender.com/requests/${id}`, {
         status: newStatus,
       });
       const updatedRequests = pendingRequests.map((request) =>
@@ -79,7 +88,7 @@ const AdminPage = () => {
       const selectedAdmin = selectedAdmins[id];
       if (selectedAdmin) {
         const response = await axios.put(
-          `http://localhost:5000/requests/${id}/forward`,
+          `https://piqyu.onrender.com/requests/${id}/forward`,
           {
             Approver: selectedAdmin,
           }
@@ -118,12 +127,57 @@ const AdminPage = () => {
     }
   };
 
+  const handleRejectRequest = async (id) => {
+    try {
+      await axios.put(`https://piqyu.onrender.com/requests/${id}`, {
+        status: "Rejected",
+      });
+      const updatedRequests = pendingRequests.map((request) =>
+        request._id === id ? { ...request, status: "Rejected" } : request
+      );
+      setPendingRequests(updatedRequests);
+      toast({
+        title: "Request Rejected",
+        description: "The request has been rejected successfully!",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+      toast({
+        title: "Error",
+        description: "Error rejecting request. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   const handleAdminSelectChange = (e, id) => {
     const { value } = e.target;
     setSelectedAdmins((prevSelectedAdmins) => ({
       ...prevSelectedAdmins,
       [id]: value,
     }));
+  };
+
+  const handleRequestDetailsClick = async (id) => {
+    try {
+      const response = await axios.get(
+        `https://piqyu.onrender.com/requests/${id}`
+      );
+      setSelectedRequestDetails(response.data);
+      setIsModalOpen(true); // Open the modal
+    } catch (error) {
+      console.error("Error fetching request details:", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal
+    setSelectedRequestDetails(null);
   };
 
   if (isLoading) {
@@ -136,9 +190,9 @@ const AdminPage = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="box">
-        <h1 className="h1-tag">Admin Page - Requests</h1>
+        <h1 className="h1-tag">Admin Page - My Approvals</h1>
         <div className="table-container">
           {pendingRequests.length > 0 ? (
             <Table variant="simple" className="admin-table">
@@ -150,15 +204,36 @@ const AdminPage = () => {
                   <Th>Quantity</Th>
                   <Th>Price</Th>
                   <Th>Forward To</Th>
-                  <Th>Forward</Th>{" "}
+                  <Th>Actions</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {pendingRequests.map((request, index) => (
                   <Tr key={index}>
                     <Td>{request.category}</Td>
-                    <Td>{request.description}</Td>
-                    <Td>{request.priceQuotation}</Td>
+                    <Td>
+                      <Text
+                        color="blue"
+                        textDecoration="underline"
+                        cursor="pointer"
+                        onClick={() => handleRequestDetailsClick(request._id)}
+                      >
+                        {request.description.substring(0, 20)}...
+                      </Text>
+                    </Td>
+                    <Td color="blue">
+                      {request.priceQuotation === "no file" ? (
+                        "No file"
+                      ) : (
+                        <a
+                          href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {request.priceQuotation}
+                        </a>
+                      )}
+                    </Td>
                     <Td>{request.quantity}</Td>
                     <Td>{request.price}</Td>
                     <Td>
@@ -177,8 +252,14 @@ const AdminPage = () => {
                       </Select>
                     </Td>
                     <Td>
-                      <Button onClick={() => handleForwardRequest(request._id)}>
+                      <Button
+                        onClick={() => handleForwardRequest(request._id)}
+                        mr={2}
+                      >
                         Forward
+                      </Button>
+                      <Button onClick={() => handleRejectRequest(request._id)}>
+                        Reject
                       </Button>
                     </Td>
                   </Tr>
@@ -190,6 +271,27 @@ const AdminPage = () => {
           )}
         </div>
       </div>
+      {/* Modal to display request details */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Request Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {selectedRequestDetails && (
+              <div>
+                <p>Description: {selectedRequestDetails.description}</p>
+                {/* Add more details here if needed */}
+              </div>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <MyRequests />
     </>
   );

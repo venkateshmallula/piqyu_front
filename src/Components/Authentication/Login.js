@@ -24,7 +24,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post("https://piqyu.onrender.com/login", {
         email,
         password,
       });
@@ -32,18 +32,21 @@ const Login = () => {
       if (response.data.exists) {
         const role = response.data.role;
         const name = response.data.name;
+        const Designation = response.data.designation;
 
         // Store username, email, and role in local storage
         localStorage.setItem("username", name);
         localStorage.setItem("email", email);
         localStorage.setItem("role", role);
+        localStorage.setItem("Designation", Designation);
 
         if (role === "requester") {
           history.push("/home");
         } else if (
           role === "admin" ||
           role === "Financeteam" ||
-          role === "telecaller"
+          role === "telecaller" ||
+          role === "host"
         ) {
           history.push("/home"); // Navigate to admin page
         }

@@ -7,6 +7,9 @@ import hostpage from "./pages/hostpage";
 import AddUser from "./pages/adduser";
 import financeTeam from "./pages/finaceTeam";
 import MyHome from "./pages/home";
+import RequestDetail from "./pages/RequestDetails";
+import Host from "./pages/host";
+
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
       <Route path="/adduser" component={AddUser} exact />
       <Route path="/Financeteam" component={financeTeam} exact />
       <Route path="/home" component={MyHome} exact />
+      <Route path="/host" component={Host} exact />
+      <Route path="/request/:requestId" component={RequestDetail} />
     </div>
   );
 }

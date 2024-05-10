@@ -7,15 +7,22 @@ import {
   Th,
   Thead,
   Tr,
-  Checkbox,
   Textarea,
   Button,
   Text,
-  useToast, // Import useToast hook
+  useToast,
+  Modal,
+  Checkbox,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import "./adminpage.css";
-import MyRequests from "./myReuests";
 import Navbar from "./navBar";
+import Allrequests from "./Allrequests";
 
 const FinanceTeam = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -25,6 +32,8 @@ const FinanceTeam = () => {
   const [selectedRequestId, setSelectedRequestId] = useState(null); // State to store the selected request ID
   const [selectedApprove, setSelectedApprove] = useState(false); // State to store the selected approval status
   const [selectedReject, setSelectedReject] = useState(false); // State to store the selected rejection status
+  const [requestDetails, setRequestDetails] = useState(null); // State to store the request details for modal
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const toast = useToast(); // Initialize useToast hook
 
   useEffect(() => {
@@ -32,7 +41,7 @@ const FinanceTeam = () => {
       try {
         const username = localStorage.getItem("username");
         const response = await axios.get(
-          `http://localhost:5000/pendingrequests/${username}`
+          `https://piqyu.onrender.com/pendingrequests/${username}`
         );
         setPendingRequests(response.data);
         setIsLoading(false);
@@ -55,7 +64,7 @@ const FinanceTeam = () => {
       if (newStatus === "Rejected") {
         requestData.rejected_message = rejectMessage; // Include rejected message if status is Rejected
       }
-      await axios.put(`http://localhost:5000/requests/${id}`, requestData);
+      await axios.put(`https://piqyu.onrender.com/requests/${id}`, requestData);
       const updatedRequests = pendingRequests.map((request) =>
         request._id === id ? { ...request, status: newStatus } : request
       );
@@ -73,12 +82,38 @@ const FinanceTeam = () => {
     setRejectMessage(event.target.value);
   };
 
-  const handleActionSubmit = (id) => {
+  const handleActionSubmit = async (id) => {
     if (selectedApprove) {
       handleStatusUpdate(id, "Approved");
     } else if (selectedReject) {
       handleStatusUpdate(id, "Rejected");
     }
+  };
+
+  const handleViewDetailsClick = async (id) => {
+    setSelectedRequestId(id);
+    try {
+      const response = await axios.get(
+        `https://piqyu.onrender.com/requests/${id}`
+      );
+      setRequestDetails(response.data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching request details:", error);
+      toast({
+        title: "Error",
+        description: "Error fetching request details. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setRequestDetails(null);
+    setSelectedRequestId(null);
   };
 
   if (isLoading) {
@@ -91,9 +126,9 @@ const FinanceTeam = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="box">
-        <h1 className="h1-tag">FinanceTeam Page - Requests</h1>
+        <h1 className="h1-tag">Finance Team Approvals & Requests</h1>
         <div className="table-container">
           {pendingRequests.length > 0 ? (
             <Table variant="simple" className="admin-table">
@@ -105,7 +140,7 @@ const FinanceTeam = () => {
                   <Th>Quantity</Th>
                   <Th>Price</Th>
                   <Th>Status</Th>
-                  <Th>Reject Message</Th>
+                  <Th>Remarks</Th>
                   <Th>Action</Th>
                 </Tr>
               </Thead>
@@ -113,8 +148,30 @@ const FinanceTeam = () => {
                 {pendingRequests.map((request, index) => (
                   <Tr key={index}>
                     <Td>{request.category}</Td>
-                    <Td>{request.description}</Td>
-                    <Td>{request.priceQuotation}</Td>
+                    <Td>
+                      <Text
+                        color="blue"
+                        textDecoration="underline"
+                        cursor="pointer"
+                        onClick={() => handleViewDetailsClick(request._id)}
+                      >
+                        {request.description.substring(0, 25)}...{" "}
+                        {/* Display first 50 characters */}
+                      </Text>
+                    </Td>
+                    <Td color="blue">
+                      {request.priceQuotation === "no file" ? (
+                        "No file"
+                      ) : (
+                        <a
+                          href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {request.priceQuotation}
+                        </a>
+                      )}
+                    </Td>
                     <Td>{request.quantity}</Td>
                     <Td>{request.price}</Td>
                     <Td>
@@ -176,7 +233,28 @@ const FinanceTeam = () => {
           )}
         </div>
       </div>
-      <MyRequests />
+      <Allrequests />
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Request Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {requestDetails && (
+              <div>
+                <p>Category: {requestDetails.category}</p>
+                <p>Description: {requestDetails.description}</p>
+                {/* Add more details here */}
+              </div>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

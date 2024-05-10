@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, useToast } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { FormControl } from "@chakra-ui/form-control";
-import { VStack } from "@chakra-ui/layout";
-import axios from "axios";
-import { Textarea } from "@chakra-ui/react";
 import {
+  Button,
+  useToast,
+  FormControl,
+  VStack,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -13,8 +11,13 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  FormLabel,
+  Input,
+  Select,
 } from "@chakra-ui/react";
-import { FormLabel, Input, Select } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { Textarea } from "@chakra-ui/react";
 
 const DrawerExample = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,23 +27,20 @@ const DrawerExample = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [adminOptions, setAdminOptions] = useState([]);
-  // New fields
-  const [requester, setRequester] = useState("");
   const [approver, setApprover] = useState("");
   const [observer, setObserver] = useState("");
 
-  const toast = useToast(); // Initialize toast hook
+  const toast = useToast();
 
   useEffect(() => {
-    // Fetch admins from backend API
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/admins");
+        const response = await axios.get("https://piqyu.onrender.com/admins");
         const currentUser = localStorage.getItem("username");
         const filteredAdmins = response.data.filter(
           (admin) => admin.name !== "Finance team" && admin.name !== currentUser
         );
-        console.log("Filtered Admins:", filteredAdmins); // Log the filtered admins
+        console.log("Filtered Admins:", filteredAdmins);
         setAdminOptions(filteredAdmins.map((admin) => admin.name));
       } catch (error) {
         console.error("Error fetching admins:", error);
@@ -61,15 +61,13 @@ const DrawerExample = () => {
     formData.append("quantity", quantity);
     formData.append("category", category);
     formData.append("price", price);
-    // Append new fields to the form data
-    formData.append("requester", requester);
+    formData.append("requester", localStorage.getItem("username"));
     formData.append("approver", approver);
     formData.append("observer", observer);
-    console.log("Form Data:", Object.fromEntries(formData.entries()));
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/postrequest",
+        "https://piqyu.onrender.com/postrequest",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -77,18 +75,14 @@ const DrawerExample = () => {
       );
       console.log("Form submitted. Response:", response.data);
 
-      // Clear form values after submission
       setRequestDetails("");
       setPriceQuotation("");
       setQuantity("");
       setCategory("");
       setPrice("");
-      // Clear new field values after submission
-      setRequester("");
       setApprover("");
       setObserver("");
 
-      // Show toast notification for successful submission
       toast({
         title: "Request Submitted",
         description: "Your request has been submitted successfully!",
@@ -97,7 +91,6 @@ const DrawerExample = () => {
         isClosable: true,
       });
 
-      // Close the drawer after submission
       toggleDrawer();
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -117,14 +110,6 @@ const DrawerExample = () => {
           <DrawerBody>
             <form onSubmit={handleSubmit}>
               <VStack spacing={4}>
-                <FormControl isRequired>
-                  <FormLabel>Requester</FormLabel>
-                  <Input
-                    value={requester}
-                    onChange={(e) => setRequester(e.target.value)}
-                    placeholder="Enter requester name"
-                  />
-                </FormControl>
                 <FormControl isRequired>
                   <FormLabel>Category</FormLabel>
                   <Select
@@ -175,7 +160,6 @@ const DrawerExample = () => {
                     placeholder="Enter Price"
                   />
                 </FormControl>
-                {/* New fields */}
                 <FormControl isRequired>
                   <FormLabel>Approver</FormLabel>
                   <Select

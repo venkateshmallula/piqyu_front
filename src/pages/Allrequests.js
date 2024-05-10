@@ -20,17 +20,17 @@ import {
 } from "@chakra-ui/react";
 import "./mreq.css";
 
-const MyRequests = () => {
+const Allrequests = () => {
   const [requests, setRequests] = useState([]);
-  const [selectedRequestDetails, setSelectedRequestDetails] = useState(null);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
+  const [requestDetails, setRequestDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const storedUsername = localStorage.getItem("username");
         const response = await axios.get(
-          `https://piqyu.onrender.com/myrequests/${storedUsername}`
+          "https://piqyu.onrender.com/allrequests"
         );
         setRequests(response.data);
       } catch (error) {
@@ -44,14 +44,22 @@ const MyRequests = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleViewDetailsClick = async (description) => {
-    setSelectedRequestDetails(description);
-    setIsModalOpen(true);
+  const fetchRequestDetails = async (id) => {
+    try {
+      const response = await axios.get(
+        `https://piqyu.onrender.com/requests/${id}`
+      );
+      setRequestDetails(response.data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching request details:", error);
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedRequestDetails(null);
+    setRequestDetails(null);
+    setSelectedRequestId(null);
   };
 
   const getStatusColor = (status) => {
@@ -70,7 +78,7 @@ const MyRequests = () => {
   return (
     <div>
       <Text fontSize="x-large" fontFamily="cursive" marginBottom="20px">
-        MY Requests
+        All Requests
       </Text>
       <div className="Table_container">
         <TableContainer>
@@ -82,37 +90,35 @@ const MyRequests = () => {
           >
             <Thead>
               <Tr>
-                <Th>Sno</Th>
                 <Th>Requester</Th>
                 <Th>Category</Th>
                 <Th>Request Details</Th>
                 <Th>Price Quotation</Th>
                 <Th>Quantity</Th>
                 <Th>Price</Th>
-                <Th>Observer</Th>
                 <Th>Approver-1</Th>
                 <Th>Approver-2</Th>
                 <Th>Approver-3</Th>
                 <Th>Finance Approval</Th>
                 <Th>Status</Th>
                 <Th>Reason for Rejection</Th>
+                <Th>Action</Th> {/* Add Action column */}
               </Tr>
             </Thead>
             <Tbody>
               {requests.map((request, index) => (
                 <Tr key={index}>
-                  <Td>{index + 1}</Td>
                   <Td>{request.requester}</Td>
                   <Td>{request.category}</Td>
                   <Td>
                     <Text
-                      cursor="pointer"
                       color="blue"
-                      onClick={() =>
-                        handleViewDetailsClick(request.description)
-                      }
+                      textDecoration="underline"
+                      cursor="pointer"
+                      onClick={() => fetchRequestDetails(request._id)}
                     >
-                      {request.description.substring(0, 10)}...
+                      {request.description.substring(0, 25)}...{" "}
+                      {/* Display first 25 characters */}
                     </Text>
                   </Td>
                   <Td color="blue">
@@ -130,7 +136,6 @@ const MyRequests = () => {
                   </Td>
                   <Td>{request.quantity}</Td>
                   <Td>{request.price}</Td>
-                  <Td>{request.observer}</Td>
                   <Td>{request.Approver1}</Td>
                   <Td>{request.Approver2}</Td>
                   <Td>{request.Approver3}</Td>
@@ -151,7 +156,13 @@ const MyRequests = () => {
           <ModalHeader>Request Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>{selectedRequestDetails}</Text>
+            {requestDetails && (
+              <div>
+                <p>Category: {requestDetails.category}</p>
+                <p>Description: {requestDetails.description}</p>
+                {/* Add more details here */}
+              </div>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" onClick={handleCloseModal}>
@@ -164,4 +175,4 @@ const MyRequests = () => {
   );
 };
 
-export default MyRequests;
+export default Allrequests;

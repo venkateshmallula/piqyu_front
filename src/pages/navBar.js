@@ -33,12 +33,16 @@ const Navbar = () => {
   };
 
   return (
-    <Flex as="nav"  alignItems="center">
-      <Heading as="h1"paddingLeft="10">PIQYU WORKFLOW</Heading>
+    <Flex as="nav" alignItems="center">
+      <Heading as="h1" paddingLeft="10">
+        PIQYU SMARTFLOW
+      </Heading>
       <Spacer />
       <HStack>
         <Box bg="gray.200" p="10px"></Box>
-        <Text>{localStorage.getItem("email")}</Text>
+        <Text>
+          Name:  {localStorage.getItem("username")}  Designation: {localStorage.getItem("Designation")}
+        </Text>
         <Button colorScheme="red" mr="10" onClick={handleLogout}>
           Logout
         </Button>
