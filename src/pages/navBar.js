@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Box,
@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FaUser } from "react-icons/fa"; // Importing the user icon
-import React from "react";
 
 const Navbar = () => {
   let history = useHistory();
@@ -37,6 +36,11 @@ const Navbar = () => {
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
+  };
+
+  const handleHomeClick = () => {
+    // Redirect to the home page
+    history.push("/home");
   };
 
   return (
@@ -65,7 +69,15 @@ const Navbar = () => {
             </Text>
           </Box>
         )}
-        <Button colorScheme="red" mr="10" onClick={handleLogout}>
+        <Button variant="ghost" colorScheme="cyan" onClick={handleHomeClick}>
+          Home
+        </Button>
+        <Button
+          variant="ghost"
+           colorScheme="red"
+          mr="10"
+          onClick={handleLogout}
+        >
           Logout
         </Button>
       </HStack>
