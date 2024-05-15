@@ -131,9 +131,10 @@ const FinanceTeam = () => {
         <h1 className="h1-tag">Finance Team Approvals & Requests</h1>
         <div className="table-container">
           {pendingRequests.length > 0 ? (
-            <Table variant="simple" className="admin-table">
+            <Table variant="simple" size="s" className="admin-table">
               <Thead>
                 <Tr>
+                  <Th>Requester</Th>
                   <Th>Category</Th>
                   <Th>Request Details</Th>
                   <Th>Price Quotation</Th>
@@ -147,6 +148,7 @@ const FinanceTeam = () => {
               <Tbody>
                 {pendingRequests.map((request, index) => (
                   <Tr key={index}>
+                    <Td>{request.requester.toUpperCase()}</Td>
                     <Td>{request.category}</Td>
                     <Td>
                       <Text
@@ -155,7 +157,7 @@ const FinanceTeam = () => {
                         cursor="pointer"
                         onClick={() => handleViewDetailsClick(request._id)}
                       >
-                        {request.description.substring(0, 25)}...{" "}
+                        {request.description.substring(0, 30)}...{" "}
                         {/* Display first 50 characters */}
                       </Text>
                     </Td>
@@ -168,7 +170,7 @@ const FinanceTeam = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {request.priceQuotation}
+                          {request.priceQuotation.substring(0, 30)}...{" "}
                         </a>
                       )}
                     </Td>
@@ -229,7 +231,7 @@ const FinanceTeam = () => {
               </Tbody>
             </Table>
           ) : (
-            <Text>No pending requests found</Text>
+            <Text padding="100px">No pending requests found</Text>
           )}
         </div>
       </div>

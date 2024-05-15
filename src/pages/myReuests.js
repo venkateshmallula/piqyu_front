@@ -69,8 +69,8 @@ const MyRequests = () => {
 
   return (
     <div>
-      <Text fontSize="x-large" fontFamily="cursive" marginBottom="20px">
-        MY Requests
+      <Text fontSize="x-large" fontFamily="sans-serif" marginBottom="20px">
+        My Requests
       </Text>
       <div className="Table_container">
         <TableContainer>
@@ -102,7 +102,7 @@ const MyRequests = () => {
               {requests.map((request, index) => (
                 <Tr key={index}>
                   <Td>{index + 1}</Td>
-                  <Td>{request.requester}</Td>
+                  <Td>{request.requester.toUpperCase()}</Td>
                   <Td>{request.category}</Td>
                   <Td>
                     <Text
@@ -112,7 +112,7 @@ const MyRequests = () => {
                         handleViewDetailsClick(request.description)
                       }
                     >
-                      {request.description.substring(0, 10)}...
+                      {request.description.substring(0, 30)}...
                     </Text>
                   </Td>
                   <Td color="blue">
@@ -124,17 +124,30 @@ const MyRequests = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {request.priceQuotation}
+                        {request.priceQuotation.substring(0, 30)}...{" "}
                       </a>
                     )}
                   </Td>
                   <Td>{request.quantity}</Td>
                   <Td>{request.price}</Td>
-                  <Td>{request.observer}</Td>
-                  <Td>{request.Approver1}</Td>
-                  <Td>{request.Approver2}</Td>
-                  <Td>{request.Approver3}</Td>
-                  <Td>{request.FinanceApproval}</Td>
+                  <Td>{request.observer.toUpperCase()}</Td>
+                  <Td>{request.Approver1.toUpperCase()}</Td>
+                  <Td>
+                    {request.Approver2
+                      ? request.Approver2.toUpperCase()
+                      : request.Approver2}
+                  </Td>
+                  <Td>
+                    {request.Approver3
+                      ? request.Approver3.toUpperCase()
+                      : request.Approver3}
+                  </Td>
+                  <Td>
+                    {request.FinanceApproval
+                      ? request.FinanceApproval.toUpperCase()
+                      : request.FinanceApproval}
+                  </Td>
+
                   <Td color={getStatusColor(request.status)}>
                     {request.status}
                   </Td>

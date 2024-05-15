@@ -3,3 +3,36 @@
     border-radius: 15px;
     margin: 30px;
 }
+.colorful-table {
+  background-color: #f7f9fc;
+}
+
+.colorful-table th,
+.colorful-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.pagination__link {
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.pagination__link--active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.pagination__link--disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}

@@ -198,6 +198,7 @@ const AdminPage = () => {
             <Table variant="simple" className="admin-table">
               <Thead>
                 <Tr>
+                  <Th>Requester</Th>
                   <Th>Category</Th>
                   <Th>Request Details</Th>
                   <Th>Price Quotation</Th>
@@ -210,6 +211,7 @@ const AdminPage = () => {
               <Tbody>
                 {pendingRequests.map((request, index) => (
                   <Tr key={index}>
+                    <Td>{request.requester.toUpperCase()}</Td>
                     <Td>{request.category}</Td>
                     <Td>
                       <Text
@@ -218,7 +220,7 @@ const AdminPage = () => {
                         cursor="pointer"
                         onClick={() => handleRequestDetailsClick(request._id)}
                       >
-                        {request.description.substring(0, 20)}...
+                        {request.description.substring(0, 30)}...
                       </Text>
                     </Td>
                     <Td color="blue">
@@ -230,7 +232,7 @@ const AdminPage = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {request.priceQuotation}
+                          {request.priceQuotation.substring(0, 30)}...
                         </a>
                       )}
                     </Td>
@@ -253,12 +255,16 @@ const AdminPage = () => {
                     </Td>
                     <Td>
                       <Button
+                        colorScheme="blue"
                         onClick={() => handleForwardRequest(request._id)}
                         mr={2}
                       >
                         Forward
                       </Button>
-                      <Button onClick={() => handleRejectRequest(request._id)}>
+                      <Button
+                        onClick={() => handleRejectRequest(request._id)}
+                        colorScheme="red"
+                      >
                         Reject
                       </Button>
                     </Td>

@@ -18,6 +18,7 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
+import ReactPaginate from "react-paginate";
 import "./mreq.css";
 
 const Allrequests = () => {
@@ -25,6 +26,8 @@ const Allrequests = () => {
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [requestDetails, setRequestDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0); // Current page number
+  const recordsPerPage = 10; // Number of records per page
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -75,9 +78,19 @@ const Allrequests = () => {
     }
   };
 
+  // Calculate index of the first and last record to display on the current page
+  const indexOfLastRecord = (pageNumber + 1) * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = requests.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  // Handle page change
+  const handlePageChange = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   return (
     <div>
-      <Text fontSize="x-large" fontFamily="cursive" marginBottom="20px">
+      <Text fontSize="xx-large" fontFamily="sans-serif" marginBottom="20px">
         All Requests
       </Text>
       <div className="Table_container">
@@ -102,13 +115,12 @@ const Allrequests = () => {
                 <Th>Finance Approval</Th>
                 <Th>Status</Th>
                 <Th>Reason for Rejection</Th>
-                <Th>Action</Th> {/* Add Action column */}
               </Tr>
             </Thead>
             <Tbody>
-              {requests.map((request, index) => (
+              {currentRecords.map((request, index) => (
                 <Tr key={index}>
-                  <Td>{request.requester}</Td>
+                  <Td>{request.requester.toUpperCase()}</Td>
                   <Td>{request.category}</Td>
                   <Td>
                     <Text
@@ -117,7 +129,7 @@ const Allrequests = () => {
                       cursor="pointer"
                       onClick={() => fetchRequestDetails(request._id)}
                     >
-                      {request.description.substring(0, 25)}...{" "}
+                      {request.description.substring(0, 30)}...{" "}
                       {/* Display first 25 characters */}
                     </Text>
                   </Td>
@@ -130,16 +142,29 @@ const Allrequests = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {request.priceQuotation}
+                        {request.priceQuotation.substring(0, 30)}...{" "}
                       </a>
                     )}
                   </Td>
                   <Td>{request.quantity}</Td>
                   <Td>{request.price}</Td>
-                  <Td>{request.Approver1}</Td>
-                  <Td>{request.Approver2}</Td>
-                  <Td>{request.Approver3}</Td>
-                  <Td>{request.FinanceApproval}</Td>
+                  <Td>{request.Approver1.toUpperCase()}</Td>
+                  <Td>
+                    {request.Approver2
+                      ? request.Approver2.toUpperCase()
+                      : request.Approver2}
+                  </Td>
+                  <Td>
+                    {request.Approver3
+                      ? request.Approver3.toUpperCase()
+                      : request.Approver3}
+                  </Td>
+                  <Td>
+                    {request.FinanceApproval
+                      ? request.FinanceApproval.toUpperCase()
+                      : request.FinanceApproval}
+                  </Td>
+
                   <Td color={getStatusColor(request.status)}>
                     {request.status}
                   </Td>
@@ -150,6 +175,17 @@ const Allrequests = () => {
           </Table>
         </TableContainer>
       </div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={Math.ceil(requests.length / recordsPerPage)}
+        onPageChange={handlePageChange}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
