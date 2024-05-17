@@ -170,7 +170,7 @@ const FinanceTeam = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {request.priceQuotation.substring(0, 30)}...{" "}
+                          {request.priceQuotation.substring(0, 20)}...{" "}
                         </a>
                       )}
                     </Td>
