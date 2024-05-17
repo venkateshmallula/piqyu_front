@@ -65,31 +65,31 @@ const MyHome = () => {
       <Navbar />
       <Box p="30px">
         <Grid templateColumns="repeat(3, 3fr)" gap={2}>
-          <GridItem w="100%" h="100" bg={colors[0]}>
+          <GridItem w="100%" h="120" bg={colors[0]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdPeople} mr={2} />
               Employee Directory
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[1]}>
+          <GridItem w="100%" h="120" bg={colors[1]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdDescription} mr={2} />
               Policies and Procedures
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[2]}>
+          <GridItem w="100%" h="120" bg={colors[2]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdLibraryBooks} mr={2} />
               Employee Handbook
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[3]}>
+          <GridItem w="100%" h="120" bg={colors[3]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdAttachMoney} mr={2} />
               Finance Requests
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[4]}>
+          <GridItem w="100%" h="120" bg={colors[4]}>
             <Flex align="center" justify="center" h="100%">
               <Link to={processRequestLink} onClick={handleProcessRequestClick}>
                 <Icon as={MdSettings} mr={2} />
@@ -97,25 +97,25 @@ const MyHome = () => {
               </Link>
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[5]}>
+          <GridItem w="100%" h="120" bg={colors[5]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdLibraryBooks} mr={2} />
               LMS
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[6]}>
+          <GridItem w="100%" h="120" bg={colors[6]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={BiCalendar} mr={2} />
               Calendar
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[7]}>
+          <GridItem w="100%" h="120" bg={colors[7]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdForum} mr={2} />
               Message Board
             </Flex>
           </GridItem>
-          <GridItem w="100%" h="100" bg={colors[8]}>
+          <GridItem w="100%" h="120" bg={colors[8]}>
             <Flex align="center" justify="center" h="100%">
               <Icon as={MdNote} mr={2} />
               Notes
