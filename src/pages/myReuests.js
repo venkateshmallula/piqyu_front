@@ -18,12 +18,15 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
+import ReactPaginate from "react-paginate";
 import "./mreq.css";
 
 const MyRequests = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequestDetails, setSelectedRequestDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0); // Current page number
+  const recordsPerPage = 10; // Number of records per page
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -67,6 +70,16 @@ const MyRequests = () => {
     }
   };
 
+  // Calculate index of the first and last record to display on the current page
+  const indexOfLastRecord = (pageNumber + 1) * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = requests.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  // Handle page change
+  const handlePageChange = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   return (
     <div>
       <Text fontSize="x-large" fontFamily="sans-serif" marginBottom="20px">
@@ -99,7 +112,7 @@ const MyRequests = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {requests.map((request, index) => (
+              {currentRecords.map((request, index) => (
                 <Tr
                   key={index}
                   className={
@@ -110,7 +123,7 @@ const MyRequests = () => {
                       : ""
                   }
                 >
-                  <Td>{index + 1}</Td>
+                  <Td>{indexOfFirstRecord + index + 1}</Td>
                   <Td>{request.requester.toUpperCase()}</Td>
                   <Td>{request.category}</Td>
                   <Td>
@@ -166,6 +179,17 @@ const MyRequests = () => {
           </Table>
         </TableContainer>
       </div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={Math.ceil(requests.length / recordsPerPage)}
+        onPageChange={handlePageChange}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>

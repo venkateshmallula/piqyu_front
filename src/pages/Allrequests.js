@@ -93,7 +93,7 @@ const Allrequests = () => {
       <Text fontSize="xx-large" fontFamily="sans-serif" marginBottom="20px">
         All Requests
       </Text>
-      <div className="Table_container">
+      <div className="table-container">
         <TableContainer>
           <Table
             variant="simple"
@@ -119,7 +119,16 @@ const Allrequests = () => {
             </Thead>
             <Tbody>
               {currentRecords.map((request, index) => (
-                <Tr key={index}>
+                <Tr
+                  key={index}
+                  className={
+                    request.status === "Rejected"
+                      ? "rejected-row"
+                      : request.status === "Approved"
+                      ? "approved-row"
+                      : ""
+                  }
+                >
                   <Td>{request.requester.toUpperCase()}</Td>
                   <Td>{request.category}</Td>
                   <Td>
@@ -130,7 +139,6 @@ const Allrequests = () => {
                       onClick={() => fetchRequestDetails(request._id)}
                     >
                       {request.description.substring(0, 30)}...{" "}
-                      {/* Display first 25 characters */}
                     </Text>
                   </Td>
                   <Td color="blue">
@@ -164,7 +172,6 @@ const Allrequests = () => {
                       ? request.FinanceApproval.toUpperCase()
                       : request.FinanceApproval}
                   </Td>
-
                   <Td color={getStatusColor(request.status)}>
                     {request.status}
                   </Td>

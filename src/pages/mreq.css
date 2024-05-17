@@ -12,30 +12,9 @@
   border: 1px solid #dee2e6;
   padding: 8px;
 }
-.pagination {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
 
-.pagination__link {
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  background-color: #fff;
-}
 
-.pagination__link--active {
-  background-color: #007bff;
-  color: #fff;
-  border: 1px solid #007bff;
-}
 
-.pagination__link--disabled {
-  pointer-events: none;
-  opacity: 0.6;
-}
 /* mreq.css */
 
 /* Matte red color for rejected rows */
@@ -69,5 +48,31 @@
 
 .table th {
   background-color: #f2f2f2;
+}
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  list-style: none;
+}
+
+.pagination__link {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination__link--active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination__link--disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
