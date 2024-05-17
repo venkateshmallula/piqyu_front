@@ -194,7 +194,7 @@ const AdminPage = () => {
       <Navbar />
       <Box className="box" p={4}>
         <Text as="h1" fontSize="2xl" mb={4}>
-          Admin Page - My Approvals
+          My Approvals
         </Text>
         <Box className="table-container" overflowX="auto">
           {pendingRequests.length > 0 ? (
