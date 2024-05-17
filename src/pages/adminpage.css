@@ -1,4 +1,4 @@
-.box{
+/*.box{
     background-color: rgb(255, 255, 255);
     height: 100vh;
 }
@@ -34,4 +34,101 @@
 
 .admin-table tr:hover {
   background-color: #ddd;
+}
+*/
+/* adminpage.css */
+
+/* Apply styles to the entire page container */
+.box {
+  padding: 1rem;
+  margin: auto;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Ensure the table container allows horizontal scrolling */
+.table-container {
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 100vh;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+/* Adjust table styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+
+/* Table headers */
+.admin-table th {
+  padding: 0.75rem;
+  background-color: #f5f5f5;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Table cells */
+.admin-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Make sure the buttons fit well */
+.admin-table button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive design for 14-inch screens */
+@media (max-width: 1300px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .admin-table button {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.6rem;
+  }
+}
+
+/* Additional responsive adjustments for smaller screens */
+@media (max-width: 1000px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .admin-table button {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Specific adjustments for very small screens (e.g., mobile) */
+@media (max-width: 768px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 0.3rem;
+    font-size: 0.7rem;
+  }
+
+  .admin-table button {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  /* Ensure text elements wrap properly */
+  .admin-table td a,
+  .admin-table td p {
+    word-wrap: break-word;
+  }
 }

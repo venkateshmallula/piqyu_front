@@ -18,6 +18,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Box,
 } from "@chakra-ui/react";
 import "./adminpage.css";
 import MyRequests from "./myReuests";
@@ -30,7 +31,7 @@ const AdminPage = () => {
   const [adminOptions, setAdminOptions] = useState([]);
   const [selectedAdmins, setSelectedAdmins] = useState({});
   const [selectedRequestDetails, setSelectedRequestDetails] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
@@ -169,14 +170,14 @@ const AdminPage = () => {
         `https://piqyu.onrender.com/requests/${id}`
       );
       setSelectedRequestDetails(response.data);
-      setIsModalOpen(true); // Open the modal
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching request details:", error);
     }
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
     setSelectedRequestDetails(null);
   };
 
@@ -191,9 +192,11 @@ const AdminPage = () => {
   return (
     <>
       <Navbar />
-      <div className="box">
-        <h1 className="h1-tag">Admin Page - My Approvals</h1>
-        <div className="table-container">
+      <Box className="box" p={4}>
+        <Text as="h1" fontSize="2xl" mb={4}>
+          Admin Page - My Approvals
+        </Text>
+        <Box className="table-container" overflowX="auto">
           {pendingRequests.length > 0 ? (
             <Table variant="simple" className="admin-table">
               <Thead>
@@ -275,9 +278,8 @@ const AdminPage = () => {
           ) : (
             <Text>No pending requests found</Text>
           )}
-        </div>
-      </div>
-      {/* Modal to display request details */}
+        </Box>
+      </Box>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
@@ -287,7 +289,6 @@ const AdminPage = () => {
             {selectedRequestDetails && (
               <div>
                 <p>Description: {selectedRequestDetails.description}</p>
-                {/* Add more details here if needed */}
               </div>
             )}
           </ModalBody>
