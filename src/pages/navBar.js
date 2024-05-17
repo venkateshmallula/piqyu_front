@@ -45,7 +45,7 @@ const Navbar = () => {
 
   return (
     <Flex as="nav" alignItems="center" height="60px" backgroundColor="#dfdfe6">
-      <Heading as="h1" paddingLeft="10" color="blueviolet">
+      <Heading as="h3" paddingLeft="10" color="blueviolet">
         PIQYU SMARTFLOW
       </Heading>
       <Spacer />
