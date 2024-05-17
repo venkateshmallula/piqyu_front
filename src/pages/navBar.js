@@ -44,7 +44,7 @@ const Navbar = () => {
   };
 
   return (
-    <Flex as="nav" alignItems="center" backgroundColor="#dfdfe6">
+    <Flex as="nav" alignItems="center" height="60px" backgroundColor="#dfdfe6">
       <Heading as="h1" paddingLeft="10" color="blueviolet">
         PIQYU SMARTFLOW
       </Heading>
@@ -74,7 +74,7 @@ const Navbar = () => {
         </Button>
         <Button
           variant="ghost"
-           colorScheme="red"
+          colorScheme="red"
           mr="10"
           onClick={handleLogout}
         >
