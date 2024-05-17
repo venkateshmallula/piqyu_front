@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from './navBar'
-import Allrequests from "./Allrequests"
+import Hostrq from './Hostrq'
 
 const Host = () => {
   return (
     <div>
         <Navbar/>
-        <Allrequests/>
+        <Hostrq/>
     </div>
   )
 }

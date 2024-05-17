@@ -21,7 +21,7 @@ import {
 import ReactPaginate from "react-paginate";
 import "./mreq.css";
 
-const Allrequests = () => {
+const Hostrq = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [requestDetails, setRequestDetails] = useState(null);
@@ -33,8 +33,9 @@ const Allrequests = () => {
     const fetchRequests = async () => {
       try {
         const response = await axios.get(
-          "https://piqyu.onrender.com/allrequests"
+          "https://piqyu.onrender.com/approved"
         );
+        console.log(response.data); // Log response data
         setRequests(response.data);
       } catch (error) {
         console.error("Error fetching requests:", error);
@@ -91,9 +92,9 @@ const Allrequests = () => {
   return (
     <div>
       <Text fontSize="xx-large" fontFamily="sans-serif" marginBottom="20px">
-        All Requests
+        Approved Requests
       </Text>
-      <div className="Table_container">
+      <div className="table-container">
         <TableContainer>
           <Table
             variant="simple"
@@ -139,7 +140,6 @@ const Allrequests = () => {
                       onClick={() => fetchRequestDetails(request._id)}
                     >
                       {request.description.substring(0, 30)}...{" "}
-                      {/* Display first 25 characters */}
                     </Text>
                   </Td>
                   <Td color="blue">
@@ -173,7 +173,6 @@ const Allrequests = () => {
                       ? request.FinanceApproval.toUpperCase()
                       : request.FinanceApproval}
                   </Td>
-
                   <Td color={getStatusColor(request.status)}>
                     {request.status}
                   </Td>
@@ -220,4 +219,4 @@ const Allrequests = () => {
   );
 };
 
-export default Allrequests;
+export default Hostrq;
