@@ -72,7 +72,7 @@ const MyRequests = () => {
       <Text fontSize="x-large" fontFamily="sans-serif" marginBottom="20px">
         My Requests
       </Text>
-      <div className="Table_container">
+      <div className="table-container">
         <TableContainer>
           <Table
             variant="simple"
@@ -100,7 +100,16 @@ const MyRequests = () => {
             </Thead>
             <Tbody>
               {requests.map((request, index) => (
-                <Tr key={index}>
+                <Tr
+                  key={index}
+                  className={
+                    request.status === "Rejected"
+                      ? "rejected-row"
+                      : request.status === "Approved"
+                      ? "approved-row"
+                      : ""
+                  }
+                >
                   <Td>{index + 1}</Td>
                   <Td>{request.requester.toUpperCase()}</Td>
                   <Td>{request.category}</Td>
@@ -147,7 +156,6 @@ const MyRequests = () => {
                       ? request.FinanceApproval.toUpperCase()
                       : request.FinanceApproval}
                   </Td>
-
                   <Td color={getStatusColor(request.status)}>
                     {request.status}
                   </Td>

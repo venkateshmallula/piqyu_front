@@ -48,6 +48,10 @@
   max-width: 100%;
   overflow-x: auto;
 }
+.h1-tag{
+    font-size: 40px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 /* Ensure the table container allows horizontal scrolling */
 .table-container {
