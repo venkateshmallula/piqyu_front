@@ -170,7 +170,7 @@ const DrawerExample = () => {
                   >
                     {adminOptions.map((admin, index) => (
                       <option key={index} value={admin}>
-                        {admin}
+                        {admin.toUpperCase()}
                       </option>
                     ))}
                   </Select>
@@ -185,7 +185,7 @@ const DrawerExample = () => {
                   >
                     {adminOptions.map((admin, index) => (
                       <option key={index} value={admin}>
-                        {admin}
+                        {admin.toUpperCase()}
                       </option>
                     ))}
                   </Select>
