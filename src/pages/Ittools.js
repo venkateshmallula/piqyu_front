@@ -18,7 +18,7 @@ const ITToolsList = () => {
           <Button
             as="a"
             key={index}
-            href="https://exelinfo-c7gvtgyqw4lvywbkivkrrs.streamlit.app/"
+            href="https://exelinfo-tacyhj8tfhzev5qepgj7av.streamlit.app/"
             target="_blank"
             rel="noopener noreferrer"
             colorScheme="teal"
