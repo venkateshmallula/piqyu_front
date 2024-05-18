@@ -8,6 +8,7 @@ import {
   MdForum,
   MdNote,
 } from "react-icons/md";
+import { FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { BiCalendar } from "react-icons/bi";
 import Navbar from "./navBar";
@@ -85,8 +86,10 @@ const MyHome = () => {
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[3]}>
             <Flex align="center" justify="center" h="100%">
-              <Icon as={MdAttachMoney} mr={2} />
-              Finance Requests
+              <Link to="/it-tools">
+                <Icon as={FaTools} mr={2} />
+                IT Tools
+              </Link>
             </Flex>
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[4]}>

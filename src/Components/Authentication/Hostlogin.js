@@ -24,7 +24,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://piqyu.onrender.com/login", {
+      const response = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });

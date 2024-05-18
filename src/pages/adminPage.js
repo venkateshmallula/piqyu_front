@@ -39,7 +39,7 @@ const AdminPage = () => {
       try {
         const username = localStorage.getItem("username");
         const response = await axios.get(
-          `https://piqyu.onrender.com/pendingrequests/${username}`
+          `http://localhost:5000/pendingrequests/${username}`
         );
         setPendingRequests(response.data);
         setIsLoading(false);
@@ -52,7 +52,7 @@ const AdminPage = () => {
 
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("https://piqyu.onrender.com/admins");
+        const response = await axios.get("http://localhost:5000/admins");
         const currentUser = localStorage.getItem("username");
         const filteredAdmins = response.data.filter(
           (admin) => admin.name !== currentUser
@@ -72,7 +72,7 @@ const AdminPage = () => {
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      await axios.put(`https://piqyu.onrender.com/requests/${id}`, {
+      await axios.put(`http://localhost:5000/requests/${id}`, {
         status: newStatus,
       });
       const updatedRequests = pendingRequests.map((request) =>
@@ -89,7 +89,7 @@ const AdminPage = () => {
       const selectedAdmin = selectedAdmins[id];
       if (selectedAdmin) {
         const response = await axios.put(
-          `https://piqyu.onrender.com/requests/${id}/forward`,
+          `http://localhost:5000/requests/${id}/forward`,
           {
             Approver: selectedAdmin,
           }
@@ -130,7 +130,7 @@ const AdminPage = () => {
 
   const handleRejectRequest = async (id) => {
     try {
-      await axios.put(`https://piqyu.onrender.com/requests/${id}`, {
+      await axios.put(`http://localhost:5000/requests/${id}`, {
         status: "Rejected",
       });
       const updatedRequests = pendingRequests.map((request) =>
@@ -166,9 +166,7 @@ const AdminPage = () => {
 
   const handleRequestDetailsClick = async (id) => {
     try {
-      const response = await axios.get(
-        `https://piqyu.onrender.com/requests/${id}`
-      );
+      const response = await axios.get(`http://localhost:5000/requests/${id}`);
       setSelectedRequestDetails(response.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -231,7 +229,7 @@ const AdminPage = () => {
                         "No file"
                       ) : (
                         <a
-                          href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
+                          href={`http://localhost:5000/files/${request.priceQuotation}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

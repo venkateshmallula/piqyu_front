@@ -37,7 +37,7 @@ const AddUser = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://piqyu.onrender.com/adduser",
+        "http://localhost:5000/adduser",
         formData
       );
       console.log("Form submitted. Response:", response.data);

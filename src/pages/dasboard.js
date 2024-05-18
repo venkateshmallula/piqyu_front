@@ -35,7 +35,7 @@ const DrawerExample = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("https://piqyu.onrender.com/admins");
+        const response = await axios.get("http://localhost:5000/admins");
         const currentUser = localStorage.getItem("username");
         const filteredAdmins = response.data.filter(
           (admin) => admin.name !== "Finance team" && admin.name !== currentUser
@@ -67,7 +67,7 @@ const DrawerExample = () => {
 
     try {
       const response = await axios.post(
-        "https://piqyu.onrender.com/postrequest",
+        "http://localhost:5000/postrequest",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

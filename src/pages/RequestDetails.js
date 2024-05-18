@@ -15,7 +15,7 @@ const RequestDetail = () => {
     const fetchRequestDetails = async () => {
       try {
         const response = await axios.get(
-          `https://piqyu.onrender.com/request/${requestId}` // Replace with your endpoint to fetch request details by ID
+          `http://localhost:5000/request/${requestId}` // Replace with your endpoint to fetch request details by ID
         );
         setRequestDetails(response.data);
         setIsLoading(false);

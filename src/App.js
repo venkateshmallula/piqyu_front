@@ -9,6 +9,7 @@ import financeTeam from "./pages/finaceTeam";
 import MyHome from "./pages/home";
 import RequestDetail from "./pages/RequestDetails";
 import Host from "./pages/host";
+import ITToolsList from "./pages/Ittools";
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
       <Route path="/Financeteam" component={financeTeam} exact />
       <Route path="/home" component={MyHome} exact />
       <Route path="/host" component={Host} exact />
+      <Route path="/it-tools" component={ITToolsList} exact />
+
       <Route path="/request/:requestId" component={RequestDetail} />
     </div>
   );
