@@ -35,7 +35,7 @@ const DrawerExample = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get("https://piqyu.onrender.com/admins");
+        const response = await axios.get("http://localhost:5000/admins");
         const currentUser = localStorage.getItem("username");
         const filteredAdmins = response.data.filter(
           (admin) => admin.name !== "Finance team" && admin.name !== currentUser
@@ -55,6 +55,18 @@ const DrawerExample = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!approver || !observer) {
+      toast({
+        title: "Validation Error",
+        description: "Both approver and observer must be selected.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("requestDetails", requestDetails);
     formData.append("priceQuotation", priceQuotation);
@@ -67,7 +79,7 @@ const DrawerExample = () => {
 
     try {
       const response = await axios.post(
-        "https://piqyu.onrender.com/postrequest",
+        "http://localhost:5000/postrequest",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

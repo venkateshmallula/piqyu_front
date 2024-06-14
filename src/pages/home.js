@@ -74,8 +74,10 @@ const MyHome = () => {
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[1]}>
             <Flex align="center" justify="center" h="100%">
-              <Icon as={MdDescription} mr={2} />
-              Policies and Procedures
+              <Link to="/policies">
+                <Icon as={MdDescription} mr={2} />
+                Policies and Procedures
+              </Link>
             </Flex>
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[2]}>

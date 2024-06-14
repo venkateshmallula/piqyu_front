@@ -37,7 +37,7 @@ const AddUser = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://piqyu.onrender.com/adduser",
+        "http://localhost:5000/adduser",
         formData
       );
       console.log("Form submitted. Response:", response.data);
@@ -60,7 +60,9 @@ const AddUser = () => {
 
   return (
     <div className="body">
-      <Text fontSize="3xl" fontFamily="cursive">Add User</Text>
+      <Text fontSize="3xl" fontFamily="cursive">
+        Add User
+      </Text>
       <div className="form-container">
         <form onSubmit={handleSubmit} className="form-tags">
           <FormControl isRequired>
@@ -102,6 +104,8 @@ const AddUser = () => {
             >
               <option value="admin">Admin</option>
               <option value="requester">Requester</option>
+              <option value="HR">HR</option>
+              <option value="telecaller">Telecaller</option>
             </Select>
           </FormControl>
           <FormControl isRequired>

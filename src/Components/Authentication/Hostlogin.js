@@ -18,14 +18,14 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const [email, setEmail] = useState();
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://piqyu.onrender.com/login", {
-        email,
+      const response = await axios.post("http://localhost:5000/login", {
+        number,
         password,
       });
       if (response.data.exists) {
@@ -34,6 +34,7 @@ const Login = () => {
         localStorage.setItem("name", response.data.name);
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("Designation", response.data.designation);
         // Redirect based on role
         if (response.data.role === "host") {
           history.push("/hostpage");
@@ -43,6 +44,16 @@ const Login = () => {
             duration: 9000,
             isClosable: true,
           });
+        }
+        else if(response.data.role !== "host"){
+          toast({
+            title: "You are not Host",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          setNumber("");
+          setPassword("");
         }
       } else if (response.data === "Incorrect password") {
         // Handle incorrect password
@@ -55,7 +66,15 @@ const Login = () => {
       } else if (response.data === "not found") {
         // Handle user not found
         toast({
-          title: "Email Does not Exist",
+          title: "Number Does not Exist",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+      else{
+        toast({
+          title: "You are not host",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -67,13 +86,13 @@ const Login = () => {
   };
   return (
     <VStack spacing="10px">
-      <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
+      <FormControl id="number" isRequired>
+        <FormLabel>Phone Number</FormLabel>
         <Input
-          value={email}
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
+          value={number}
+          type="tel"
+          placeholder="Enter Your Phone Number"
+          onChange={(e) => setNumber(e.target.value)}
         />
       </FormControl>
       <FormControl id="password" isRequired>

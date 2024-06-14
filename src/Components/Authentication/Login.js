@@ -16,7 +16,7 @@ const Login = () => {
   let history = useHistory();
   const toast = useToast();
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
 
   const handleClick = () => setShow(!show);
@@ -24,27 +24,28 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://piqyu.onrender.com/login", {
-        email,
+      const response = await axios.post("http://localhost:5000/login", {
+        number,
         password,
       });
 
       if (response.data.exists) {
         const role = response.data.role;
         const name = response.data.name;
+        const email = response.data.email;
         const Designation = response.data.designation;
 
-        // Store username, email, and role in local storage
+        // Store username, number, and role in local storage
         localStorage.setItem("username", name);
         localStorage.setItem("email", email);
         localStorage.setItem("role", role);
         localStorage.setItem("Designation", Designation);
 
-        if (role === "requester") {
-          history.push("/home");
-        } else if (
+        if (
+          role === "requester" ||
           role === "admin" ||
           role === "Financeteam" ||
+          role === "HR" ||
           role === "telecaller" ||
           role === "host"
         ) {
@@ -65,7 +66,7 @@ const Login = () => {
         });
       } else if (response.data === "not found") {
         toast({
-          title: "Email Does not Exist",
+          title: "Number Does not Exist",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -78,13 +79,13 @@ const Login = () => {
 
   return (
     <VStack spacing="10px">
-      <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
+      <FormControl id="number" isRequired>
+        <FormLabel>Phone Number</FormLabel>
         <Input
-          value={email}
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
+          value={number}
+          type="tel"
+          placeholder="Enter Your Phone Number"
+          onChange={(e) => setNumber(e.target.value)}
         />
       </FormControl>
       <FormControl id="password" isRequired>

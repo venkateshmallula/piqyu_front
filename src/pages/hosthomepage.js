@@ -28,7 +28,7 @@ const HostHomepage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://piqyu.onrender.com/users");
+      const response = await axios.get("http://localhost:5000/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -42,10 +42,7 @@ const HostHomepage = () => {
 
   const handleSave = async (userId) => {
     try {
-      await axios.put(
-        `https://piqyu.onrender.com/user/${userId}`,
-        updatedUserData
-      );
+      await axios.put(`http://localhost:5000/user/${userId}`, updatedUserData);
       setEditableUserId(null);
       setUpdatedUserData({}); // Reset updated user data
       fetchUsers(); // Refresh the user list
@@ -127,7 +124,7 @@ const HostHomepage = () => {
                       onChange={handleInputChange}
                     />
                   ) : (
-                    user.password
+                    user.password.substring(0, 10)
                   )}
                 </Td>
                 <Td>

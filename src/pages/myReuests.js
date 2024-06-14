@@ -33,7 +33,7 @@ const MyRequests = () => {
       try {
         const storedUsername = localStorage.getItem("username");
         const response = await axios.get(
-          `https://piqyu.onrender.com/myrequests/${storedUsername}`
+          `http://localhost:5000/myrequests/${storedUsername}`
         );
         setRequests(response.data);
       } catch (error) {
@@ -142,7 +142,7 @@ const MyRequests = () => {
                       "No file"
                     ) : (
                       <a
-                        href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
+                        href={`http://localhost:5000/files/${request.priceQuotation}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
