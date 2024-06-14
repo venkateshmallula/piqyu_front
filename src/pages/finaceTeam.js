@@ -41,7 +41,7 @@ const FinanceTeam = () => {
       try {
         const username = localStorage.getItem("username");
         const response = await axios.get(
-          `http://localhost:5000/pendingrequests/${username}`
+          `https://piqyu.onrender.com/pendingrequests/${username}`
         );
         setPendingRequests(response.data);
         setIsLoading(false);
@@ -64,7 +64,7 @@ const FinanceTeam = () => {
       if (newStatus === "Rejected") {
         requestData.rejected_message = rejectMessage; // Include rejected message if status is Rejected
       }
-      await axios.put(`http://localhost:5000/requests/${id}`, requestData);
+      await axios.put(`https://piqyu.onrender.com/requests/${id}`, requestData);
       const updatedRequests = pendingRequests.map((request) =>
         request._id === id ? { ...request, status: newStatus } : request
       );
@@ -93,7 +93,7 @@ const FinanceTeam = () => {
   const handleViewDetailsClick = async (id) => {
     setSelectedRequestId(id);
     try {
-      const response = await axios.get(`http://localhost:5000/requests/${id}`);
+      const response = await axios.get(`https://piqyu.onrender.com/requests/${id}`);
       setRequestDetails(response.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -164,7 +164,7 @@ const FinanceTeam = () => {
                         "No file"
                       ) : (
                         <a
-                          href={`http://localhost:5000/files/${request.priceQuotation}`}
+                          href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
