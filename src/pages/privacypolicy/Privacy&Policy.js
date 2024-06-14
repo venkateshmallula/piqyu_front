@@ -21,7 +21,7 @@ const PrivacyPolicy = () => {
     const fetchFile = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/privacyPolicy"
+          "https://piqyu.onrender.com/privacyPolicy"
         );
         if (response.status === 200) {
           setExistingFile("privacyPolicy.pdf");
@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/uploadPrivacyPolicy",
+        "https://piqyu.onrender.com/uploadPrivacyPolicy",
         formData,
         {
           headers: {
@@ -116,7 +116,7 @@ const PrivacyPolicy = () => {
         {existingFile && (
           <Box mt="4">
             <a
-              href={`http://localhost:5000/privacyPolicy`}
+              href={`https://piqyu.onrender.com/privacyPolicy`}
               target="_blank"
               rel="noopener noreferrer"
             >
