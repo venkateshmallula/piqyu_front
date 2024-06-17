@@ -32,7 +32,7 @@ const Allrequests = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/allrequests");
+        const response = await axios.get("https://piqyu.onrender.com/allrequests");
         setRequests(response.data);
       } catch (error) {
         console.error("Error fetching requests:", error);
@@ -47,7 +47,7 @@ const Allrequests = () => {
 
   const fetchRequestDetails = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/requests/${id}`);
+      const response = await axios.get(`https://piqyu.onrender.com/requests/${id}`);
       setRequestDetails(response.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -143,7 +143,7 @@ const Allrequests = () => {
                       "No file"
                     ) : (
                       <a
-                        href={`http://localhost:5000/files/${request.priceQuotation}`}
+                        href={`https://piqyu.onrender.com/files/${request.priceQuotation}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
