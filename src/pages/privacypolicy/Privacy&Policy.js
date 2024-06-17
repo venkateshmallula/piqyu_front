@@ -1,44 +1,42 @@
-import React from "react";
-import {
-  MdPeople,
-  MdDescription,
-  MdLibraryBooks,
-} from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { MdPeople, MdDescription, MdLibraryBooks } from "react-icons/md";
 import {
   Grid,
-  GridItem, 
-  Icon, 
-  Flex, 
+  GridItem,
+  Icon,
+  Flex,
   Box,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  useToast,
 } from "@chakra-ui/react";
-
-import { Link } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../navBar";
+import { Link } from "react-router-dom";
+import "./policy.css";
 
 const PrivacyPolicy = () => {
+  const [isHR, setIsHR] = useState(false);
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [existingFile, setExistingFile] = useState(null);
+  const toast = useToast();
 
-<<<<<<< HEAD
-  // Array of colors for grid items
-  const colors = [
-    "blue.500",
-    "green.500",
-    "purple.500",
-    "yellow.500",
-    "orange.500",
-    "teal.500",
-    "pink.500",
-    "cyan.500",
-    "red.500",
-  ];
-=======
   useEffect(() => {
+    const designation = localStorage.getItem("Designation");
+    if (designation === "HR") {
+      setIsHR(true);
+    }
+
     const fetchFile = async () => {
       try {
         const response = await axios.get(
-          "https://piqyu.onrender.com/privacyPolicy"
+          "http://localhost:5000/privacyPolicies"
         );
         if (response.status === 200) {
-          setExistingFile("privacyPolicy.pdf");
+          setExistingFile(response.data.files);
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -48,6 +46,7 @@ const PrivacyPolicy = () => {
         }
       }
     };
+
     fetchFile();
   }, []);
 
@@ -71,11 +70,11 @@ const PrivacyPolicy = () => {
     }
 
     const formData = new FormData();
-    formData.append("privacyPolicy", file);
+    formData.append("file", file);
 
     try {
       const response = await axios.post(
-        "https://piqyu.onrender.com/uploadPrivacyPolicy",
+        "http://localhost:5000/uploadPrivacyPolicy",
         formData,
         {
           headers: {
@@ -94,7 +93,7 @@ const PrivacyPolicy = () => {
       });
       setFile(null); // Clear the file input after successful upload
       setFileName(""); // Clear the file name
-      setExistingFile("privacyPolicy.pdf");
+      setExistingFile([...existingFile, fileName]); // Update the existing files list
     } catch (error) {
       console.error("Error uploading file:", error);
       toast({
@@ -106,39 +105,17 @@ const PrivacyPolicy = () => {
       });
     }
   };
->>>>>>> 7c85fa4904767a45a6da21733dbdf7ab713c5d19
+
+  const handleFileClick = (fileName) => {
+    window.open(`http://localhost:5000/privacyPolicies/${fileName}`, "_blank");
+  };
 
   return (
     <>
       <Navbar />
-<<<<<<< HEAD
-      <Box p="30px">
-        <Grid templateColumns="repeat(3, 3fr)" gap={2}>
-          <GridItem w="100%" h="120" bg={colors[0]}>
-            <Flex align="center" justify="center" h="100%">
-              <Icon as={MdPeople} mr={2} />
-              General
-            </Flex>
-          </GridItem>
-          <GridItem w="100%" h="120" bg={colors[1]}>
-            <Flex align="center" justify="center" h="100%">
-              <Link to="/policy">
-                <Icon as={MdDescription} mr={2} />
-                HR
-              </Link>
-            </Flex>
-          </GridItem>
-          <GridItem w="100%" h="120" bg={colors[2]}>
-            <Flex align="center" justify="center" h="100%">
-              <Icon as={MdLibraryBooks} mr={2} />
-              Finance
-            </Flex>
-          </GridItem>
-        </Grid>
-=======
       <Box p="5">
         <div>Privacy & Policy</div>
-        {Designation === "HR" && (
+        {isHR && (
           <form onSubmit={handleSubmit}>
             <FormControl mt="4">
               <FormLabel htmlFor="file">Upload Privacy Policy (PDF)</FormLabel>
@@ -155,16 +132,37 @@ const PrivacyPolicy = () => {
         )}
         {existingFile && (
           <Box mt="4">
-            <a
-              href={`https://piqyu.onrender.com/privacyPolicy`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button>View Privacy Policy</Button>
-            </a>
+            {existingFile.map((fileName, index) => (
+              <Button key={index} onClick={() => handleFileClick(fileName)}>
+                {fileName}
+              </Button>
+            ))}
           </Box>
         )}
->>>>>>> 7c85fa4904767a45a6da21733dbdf7ab713c5d19
+      </Box>
+      <Box p="30px">
+        <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+          <GridItem w="100%" h="120px" bg="blue.500">
+            <Flex align="center" justify="center" h="100%">
+              <Icon as={MdPeople} mr={2} />
+              General
+            </Flex>
+          </GridItem>
+          <GridItem w="100%" h="120px" bg="green.500">
+            <Flex align="center" justify="center" h="100%">
+              <Link to="/policy">
+                <Icon as={MdDescription} mr={2} />
+                HR
+              </Link>
+            </Flex>
+          </GridItem>
+          <GridItem w="100%" h="120px" bg="purple.500">
+            <Flex align="center" justify="center" h="100%">
+              <Icon as={MdLibraryBooks} mr={2} />
+              Finance
+            </Flex>
+          </GridItem>
+        </Grid>
       </Box>
     </>
   );
