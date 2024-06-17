@@ -45,24 +45,26 @@ const Hostpage = () => {
 
   return (
     <div>
-      <Flex as="nav" alignItems="center">
-        <Heading as="h1">PIQYU WORKFLOW</Heading>
-        <Spacer />
-        <HStack>
-          <Box bg="gray.200" p="10px"></Box>
-          <Text>{localStorage.getItem("email")}</Text>
-          <Button onClick={handleGoToHomepage}>Homepage</Button>
-          <Button
-            colorScheme="blue"
-            onClick={() => setActiveComponent("AddUser")}
-          >
-            Add User
-          </Button>
-          <Button colorScheme="red" onClick={handleLogout}>
-            Logout
-          </Button>
-        </HStack>
-      </Flex>
+      <div className="nav">
+        <Flex as="nav" alignItems="center">
+          <Heading as="h1">PIQYU WORKFLOW</Heading>
+          <Spacer />
+          <HStack>
+            <Box bg="gray.200" p="10px"></Box>
+            <Text>{localStorage.getItem("email")}</Text>
+            <Button onClick={handleGoToHomepage}>Homepage</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => setActiveComponent("AddUser")}
+            >
+              Add User
+            </Button>
+            <Button colorScheme="red" onClick={handleLogout}>
+              Logout
+            </Button>
+          </HStack>
+        </Flex>
+      </div>
 
       {/* Render the selected component */}
       <div className="component-container">

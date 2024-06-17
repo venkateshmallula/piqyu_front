@@ -104,8 +104,6 @@ const AddUser = () => {
             >
               <option value="admin">Admin</option>
               <option value="requester">Requester</option>
-              <option value="HR">HR</option>
-              <option value="telecaller">Telecaller</option>
             </Select>
           </FormControl>
           <FormControl isRequired>

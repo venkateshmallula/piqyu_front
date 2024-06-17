@@ -1,0 +1,24 @@
+.react-calendar {
+  width: 100%;
+  border: 1px solid #a0a096;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.react-calendar__tile {
+  max-width: 100%;
+  text-align: center;
+  padding: 15px; /* Increase padding for larger tiles */
+  background: #f9f9f9;
+  border-radius: 5px;
+}
+
+.react-calendar__tile--active {
+  background: #90cdf4;
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background: #c6f6d5;
+  color: black;
+}

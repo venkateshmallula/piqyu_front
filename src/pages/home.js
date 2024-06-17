@@ -68,8 +68,10 @@ const MyHome = () => {
         <Grid templateColumns="repeat(3, 3fr)" gap={2}>
           <GridItem w="100%" h="120" bg={colors[0]}>
             <Flex align="center" justify="center" h="100%">
-              <Icon as={MdPeople} mr={2} />
-              Employee Directory
+              <Link to="/employees">
+                <Icon as={MdPeople} mr={2} />
+                Employee Directory
+              </Link>
             </Flex>
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[1]}>
@@ -110,8 +112,10 @@ const MyHome = () => {
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[6]}>
             <Flex align="center" justify="center" h="100%">
-              <Icon as={BiCalendar} mr={2} />
-              Calendar
+              <Link to="/callender">
+                <Icon as={BiCalendar} mr={2} />
+                Calendar
+              </Link>
             </Flex>
           </GridItem>
           <GridItem w="100%" h="120" bg={colors[7]}>

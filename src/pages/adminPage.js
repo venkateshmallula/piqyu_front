@@ -9,6 +9,7 @@ import {
   Tr,
   Text,
   Select,
+  Flex,
   useToast,
   Button,
   Modal,
@@ -23,6 +24,7 @@ import {
 import "./adminpage.css";
 import MyRequests from "./myReuests";
 import Navbar from "./navBar";
+import DrawerExample from "./dasboard";
 
 const AdminPage = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -190,6 +192,21 @@ const AdminPage = () => {
   return (
     <>
       <Navbar />
+      <Flex>
+        <Box flex="1" p={4}>
+          <Text
+            as="h1"
+            fontSize="2xl"
+            fontFamily="Noto Sans"
+            mb={4}
+            paddingRight={1100}
+          >
+          </Text>
+        </Box>
+        <Box paddingRight={10}>
+          <DrawerExample />
+        </Box>
+      </Flex>
       <Box className="box" p={4}>
         <Text as="h1" fontSize="2xl" mb={4}>
           My Approvals

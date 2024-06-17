@@ -11,6 +11,9 @@ import RequestDetail from "./pages/RequestDetails";
 import Host from "./pages/host";
 import ITToolsList from "./pages/Ittools";
 import Policies from "./pages/privacypolicy/Privacy&Policy"
+import Employeelist from "./pages/Employeedirectory/employeelist";
+import Callendar from "./pages/CallenderModule/Callender"
+import policy from "./pages/privacypolicy/policy"
 
 function App() {
   return (
@@ -23,9 +26,12 @@ function App() {
       <Route path="/Financeteam" component={financeTeam} exact />
       <Route path="/home" component={MyHome} exact />
       <Route path="/host" component={Host} exact />
+      <Route path="/employees" component={Employeelist} exact />
       <Route path="/policies" component={Policies} exact />
       <Route path="/it-tools" component={ITToolsList} exact />
-      <Route path="/request/:requestId" component={RequestDetail} />
+      <Route path="/policy" component={policy} exact />
+      <Route path="/callender" component={Callendar} exact />
+      <Route path="/request/:requestId" component={RequestDetail} exact />
     </div>
   );
 }

@@ -59,13 +59,13 @@ const Navbar = () => {
             <Text fontWeight="bold">
               Name:{" "}
               <Text as="span" fontWeight="normal">
-                {localStorage.getItem("username")}
+                {localStorage.getItem("username").toLocaleUpperCase()}
               </Text>
             </Text>
             <Text fontWeight="bold">
               Designation:{" "}
               <Text as="span" fontWeight="normal">
-                {localStorage.getItem("Designation")}
+                {localStorage.getItem("Designation").toLocaleUpperCase()}
               </Text>
             </Text>
           </Box>
