@@ -49,7 +49,9 @@ function FileGrid() {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/privacyPolicies");
+      const response = await axios.get(
+        "https://piqyu.onrender.com/privacyPolicies"
+      );
       setFiles(response.data.files);
     } catch (error) {
       console.error("Error fetching files:", error);
@@ -85,7 +87,7 @@ function FileGrid() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/uploadPrivacyPolicy",
+        "https://piqyu.onrender.com/uploadPrivacyPolicy",
         formData,
         {
           headers: {
@@ -120,7 +122,10 @@ function FileGrid() {
     // Implement logic to open or download the file here
     console.log("Clicked on file:", fileName);
     // Example: You can open a new tab with the file URL for download
-    window.open(`http://localhost:5000/privacyPolicies/${fileName}`, "_blank");
+    window.open(
+      `https://piqyu.onrender.com/privacyPolicies/${fileName}`,
+      "_blank"
+    );
   };
 
   return (
